@@ -1,13 +1,15 @@
+import { InputPropsType, VariantClassType } from "@/cnostants/types";
 import { primary, secondary } from "../../cnostants/tvar";
 
 export const Input = ({
   type,
+  error,
   className,
   varient = "primary",
   cVarient,
   ...props
-}) => {
-  let varientClass = {
+}: InputPropsType) => {
+  let varientClass: VariantClassType = {
     // primary: `border border-purple-500`,
     // primary: `text-sm font-normal px-4 py-3 border border-[#C9C9C9] focus:border focus:border-[#EC6608] hover:border hover:border-[#EC6608] rounded focus:outline-none ease-in-out duration-150`,
     primary: `focus:shadow-xl/15 shadow-${secondary} text-${primary} hover:text-${secondary} focus:outline-[0] focus:text-${secondary} ative:text-${secondary} border-1 border-${primary} focus:border-${secondary}`,
@@ -18,18 +20,18 @@ export const Input = ({
       }),
   };
 
-  let classes = `
+  let classes = `${error ? "border-red-500" : ""} ${className ? className : ""} 
     ${cVarient ? varientClass.custom : ""} 
-    ${varient ? varientClass[varient] : ""} ${className ? className : ""}`;
+    ${varient ? varientClass[varient] : ""}`;
 
   return (
     <input
       type={type}
-      className={`${
+      className={`${classes} ${
         type === "text" || type === "number" || type === "email"
           ? "px-3 py-2 rounded-lg w-full duration-150 ease-in-out"
           : ""
-      } ${classes}`}
+      }`}
       // className="text-sm font-normal px-4 py-3 border border-[#C9C9C9] focus:border focus:border-[#EC6608] hover:border hover:border-[#EC6608] rounded focus:outline-none ease-in-out duration-150"
       {...props}
     />

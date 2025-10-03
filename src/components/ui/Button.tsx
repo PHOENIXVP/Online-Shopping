@@ -1,3 +1,4 @@
+import { ButtonPropsType, VariantClassType } from "@/cnostants/types";
 import { primary, secondary } from "../../cnostants/tvar";
 
 export const Button = ({
@@ -6,8 +7,8 @@ export const Button = ({
   cVarient,
   children,
   ...props
-}) => {
-  let varientClass = {
+}: ButtonPropsType) => {
+  let varientClass: VariantClassType = {
     primary: `text-${primary} hover:text-${secondary} border border-${primary} hover:border-${secondary}`,
     secondary: `text-${secondary} hover:text-${primary} border border-${secondary} hover:border-${primary}`,
     ...(cVarient &&
@@ -16,12 +17,13 @@ export const Button = ({
       }),
   };
 
-  let classes = `
-    ${cVarient ? varientClass.custom : ""} ${varient ? varientClass[varient] : ""} ${className ? className : ""}`;
+  let classes = `${className ? className : ""} 
+    ${cVarient ? varientClass.custom : ""} 
+    ${varient ? varientClass[varient] : ""}`;
 
   return (
     <button
-      className={`${classes} px-3 py-2 rounded-lg cursor-pointer duration-150 ease-in-out`}
+      className={`${classes} px-3 py-2 rounded-lg cursor-pointer duration-150 ease-in-out select-none`}
       {...props}
     >
       {children}

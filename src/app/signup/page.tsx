@@ -1,13 +1,13 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { Button } from "../../components/ui/Button";
-import Image from "next/image";
-import signupBanner from "../../../public/signupBanner.jpg";
-import { Input } from "../../components/ui/Input";
-import { Select } from "../../components/ui/Select";
-import { primary, secondary } from "../../cnostants/tvar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import Image from "next/image";
+import signupBanner from "../../../public/signupBanner.jpg";
+import { primary, secondary } from "../../cnostants/tvar";
+import { Button } from "../../components/ui/Button";
+import { Input } from "../../components/ui/Input";
+import { Select } from "../../components/ui/Select";
 
 const formSchema = z.object({
   firstName: z
@@ -32,7 +32,9 @@ const formSchema = z.object({
   newsletter: z.boolean().default(false),
   preference: z.string().optional(),
 });
+
 export default function Someform() {
+  type formDataType = z.infer<typeof formSchema>;
   const {
     register,
     handleSubmit,
@@ -52,7 +54,7 @@ export default function Someform() {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: formDataType) => {
     console.log(data);
   };
 
@@ -77,9 +79,10 @@ export default function Someform() {
               First Name
             </label>
             <Input
+              error={errors.firstName}
               id="firstName"
               type="text"
-              className={`${errors.firstName ? "boder-red-500" : ""}`}
+              // className={`${errors.firstName ? "boder-red-500" : ""}`}
               {...register("firstName", {
                 // required: "First name is required",
               })}
@@ -98,6 +101,7 @@ export default function Someform() {
               Email
             </label>
             <Input
+              error={errors.email}
               id="email"
               type="email"
               {...register("email", {
@@ -118,9 +122,11 @@ export default function Someform() {
               Age
             </label>
             <Input
+              error={errors.age}
               id="age"
               type="number"
               {...register("age", {
+                valueAsNumber: true,
                 // required: "Age is required",
               })}
             />
@@ -138,7 +144,8 @@ export default function Someform() {
               Country
             </label>
             <Select
-              className="px-3 py-2 rounded-lg w-full text-blue-500 hover:text-purple-500 border-blue-500-400 border hover:border-blue-500-800"
+              error={errors.country}
+              // className="px-3 py-2 rounded-lg w-full text-blue-500 hover:text-purple-500 border-blue-500-400 border hover:border-blue-500-800"
               id="country"
               {...register("country", {
                 // required: "Please select a country",
@@ -250,7 +257,7 @@ export default function Someform() {
                   Newsletter Preference
                 </label>
                 <Select
-                  className="px-3 py-2 rounded-lg w-full text-blue-500 hover:text-purple-500 border-blue-500-400 border hover:border-blue-500-800"
+                  // className="px-3 py-2 rounded-lg w-full text-blue-500 hover:text-purple-500 border-blue-500-400 border hover:border-blue-500-800"
                   id="preference"
                   {...register("preference")}
                 >

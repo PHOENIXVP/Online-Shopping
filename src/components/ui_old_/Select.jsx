@@ -2,6 +2,7 @@ import { primary, secondary } from "../../cnostants/tvar";
 
 export const Select = ({
   className,
+  error,
   varient = "primary",
   cVarient,
   children,
@@ -16,13 +17,13 @@ export const Select = ({
       }),
   };
 
-  let classes = `
+  let classes = `${error ? "border-red-500" : ""} ${className ? className : ""} 
     ${cVarient ? varientClass.custom : ""} 
-    ${varient ? varientClass[varient] : ""} ${className ? className : ""}`;
+    ${varient ? varientClass[varient] : ""}`;
 
   return (
     <select
-      className={`px-3 py-2 rounded-lg w-full duration-150 ease-in-out ${classes}`}
+      className={`${classes} px-3 py-2 rounded-lg w-full duration-150 ease-in-out`}
       {...props}
     >
       {children}
